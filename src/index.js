@@ -5,5 +5,5 @@ console.log('============\n')
 
 console.log('Reading data...\n')
 fileReader.readInputFile('input.txt')
-  .then(parsed => JSON.stringify(console.log(parsed)))
+  .then(parsed => console.log(parsed))
   .catch(error => console.error(error))
