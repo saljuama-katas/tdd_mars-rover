@@ -1,6 +1,6 @@
 const { Rover } = require('./Rover')
 
-class CommandCenter {
+class MissionControl {
   constructor(missionData) {
     if (!missionData.plateau || !missionData.plateau.maxX || !missionData.plateau.maxY)
       throw new Error('Plateau data is missing')
@@ -12,7 +12,7 @@ class CommandCenter {
     this.commands = missionData.rovers.map(rover => rover.command)
   }
 
-  runMission() {
+  run() {
     for(let i = 0; i < this.rovers.length; i++) {
       const rover = this.rovers[i]
       const command = this.commands[i]
@@ -20,15 +20,14 @@ class CommandCenter {
         rover.execute(command[j])
       }
     }
+    return this
   }
 
-  missionStatus() {
+  status() {
     return this.rovers
       .map(rover => rover.toString())
       .join('\n')
   }
 }
 
-module.exports = {
-  CommandCenter
-}
+module.exports = { MissionControl }

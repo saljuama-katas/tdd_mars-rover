@@ -1,6 +1,6 @@
-const { CommandCenter } = require('./CommandCenter')
+const { MissionControl } = require('./MissionControl')
 
-describe('Command Centers', () => {
+describe('Mission Control', () => {
 
   it('aborts a mission if the plateau info is missing', () => {
     const missionData = {
@@ -9,7 +9,7 @@ describe('Command Centers', () => {
         { x: 3, y: 3, direction: 'E', command: 'MMRMMRMRRM' }
       ]
     }
-    expect(() => new CommandCenter(missionData)).toThrow(Error)
+    expect(() => new MissionControl(missionData)).toThrow(Error)
 
     const missionData2 = {
       plateau: {},
@@ -18,19 +18,19 @@ describe('Command Centers', () => {
         { x: 3, y: 3, direction: 'E', command: 'MMRMMRMRRM' }
       ]
     }
-    expect(() => new CommandCenter(missionData2)).toThrow(Error)
+    expect(() => new MissionControl(missionData2)).toThrow(Error)
   })
 
   it('aborts a mission if there are no rovers', () => {
     const missionData = {
       plateau: { maxX: 5, maxY: 5 },
     }
-    expect(() => new CommandCenter(missionData)).toThrow(Error)
+    expect(() => new MissionControl(missionData)).toThrow(Error)
     const missionData2 = {
       plateau: { maxX: 5, maxY: 5 },
       rovers: []
     }
-    expect(() => new CommandCenter(missionData2)).toThrow(Error)
+    expect(() => new MissionControl(missionData2)).toThrow(Error)
   })
 
   it('initialize a mission when the mission data is valid', () => {
@@ -42,9 +42,9 @@ describe('Command Centers', () => {
       ]
     }
 
-    const commandCenter = new CommandCenter(missionData)
-    expect(commandCenter.missionStatus()).toEqual('1 2 N\n3 3 E')
-    expect(commandCenter.commands).toEqual(['LMLMLMLMM', 'MMRMMRMRRM'])
+    const missionControl = new MissionControl(missionData)
+    expect(missionControl.status()).toEqual('1 2 N\n3 3 E')
+    expect(missionControl.commands).toEqual(['LMLMLMLMM', 'MMRMMRMRRM'])
   })
 
   it('runs a full mission', () => {
@@ -55,10 +55,10 @@ describe('Command Centers', () => {
         { x: 3, y: 3, direction: 'E', command: 'MMRMMRMRRM' }
       ]
     }
-    const commandCenter = new CommandCenter(missionData)
-    commandCenter.runMission()
+    const missionControl = new MissionControl(missionData)
+    missionControl.run()
 
-    expect(commandCenter.missionStatus()).toEqual('1 3 N\n5 1 E')
+    expect(missionControl.status()).toEqual('1 3 N\n5 1 E')
   })
 
   // ¯\_(ツ)_/¯
