@@ -9,8 +9,8 @@
     "start": "node src/index.js"
   },
   "devDependencies": {
-    "jest": "^25.1.0",
-    "jest-each": "^25.1.0",
+    "jest": "^26.6.2",
+    "jest-each": "^26.6.2",
     "mock-fs": "^4.10.4"
   },
   "author": "",
